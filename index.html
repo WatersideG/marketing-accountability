@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marketing Accountability Worksheet</title>
+  <style>
+    :root {
+      --navy: #1a2744;
+      --slate: #3a4a5c;
+      --accent: #2c7be5;
+      --accent-light: #e8f0fe;
+      --bg: #f5f7fa;
+      --card-bg: #ffffff;
+      --border: #dce1e8;
+      --text: #2d3748;
+      --text-muted: #6b7a8d;
+      --success: #38a169;
+      --warning: #d69e2e;
+      --danger: #e53e3e;
+      --radius: 12px;
+      --shadow: 0 1px 4px rgba(0,0,0,0.06);
+      --shadow-lg: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 5rem;
+    }
+
+    /* ââ Sticky Header ââ */
+    .header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--slate) 100%);
+      color: #fff;
+      padding: 1.25rem 1rem 0.75rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    .header h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; }
+    .header p { font-size: 0.75rem; opacity: 0.7; margin-top: 0.15rem; }
+
+    /* ââ Search Bar ââ */
+    .search-wrap {
+      padding: 0.6rem 1rem 0.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 99;
+      background: var(--bg);
+    }
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0 0.85rem;
+      transition: border-color 0.2s;
+      box-shadow: var(--shadow);
+    }
+    .search-bar:focus-within { border-color: var(--accent); }
+    .search-bar svg { width: 18px; height: 18px; color: var(--text-muted); flex-shrink: 0; }
+    .search-bar input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 0.7rem 0.6rem;
+      font-size: 0.9rem;
+      background: transparent;
+      color: var(--text);
+    }
+    .search-bar input::placeholder { color: var(--text-muted); }
+    .search-clear {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      padding: 0.3rem;
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+    .search-clear.show { display: block; }
+
+    /* ââ Tab Navigation ââ */
+    .tabs {
+      display: flex;
+      gap: 0;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab {
+      flex: 1;
+      min-width: max-content;
+      padding: 0.65rem 0.9rem;
+      text-align: center;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-bottom: 2.5px solid transparent;
+      transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* ââ Content Panels ââ */
+    .content { padding: 0.75rem 1rem; max-width: 900px; margin: 0 auto; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* ââ Person Cards ââ */
+    .person-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      margin-bottom: 0.65rem;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .person-card:active { box-shadow: var(--shadow-lg); }
+    .person-summary {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1rem;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .avatar.lead { background: var(--navy); }
+    .avatar.mid { background: var(--accent); }
+    .avatar.jr { background: #7c8baa; }
+    .avatar.hire { background: var(--warning); }
+    .avatar.team { background: var(--slate); }
+    .person-info { flex: 1; min-width: 0; }
+    .person-info h3 { font-size: 0.92rem; font-weight: 700; color: var(--navy); }
+    .person-info .subtitle { font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .person-arrow {
+      width: 20px; height: 20px; color: var(--border);
+      transition: transform 0.2s, color 0.2s;
+      flex-shrink: 0;
+    }
+    .person-card.open .person-arrow { transform: rotate(90deg); color: var(--accent); }
+
+    .person-detail {
+      display: none;
+      padding: 0 1rem 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .person-card.open .person-detail { display: block; }
+
+    .detail-row {
+      display: flex;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid #f0f2f5;
+      font-size: 0.82rem;
+    }
+    .detail-row:last-child { border-bottom: none; }
+    .detail-label {
+      width: 95px;
+      flex-shrink: 0;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding-top: 0.1rem;
+    }
+    .detail-value { flex: 1; }
+    .detail-value ul { padding-left: 1.1rem; margin: 0; }
+    .detail-value ul li { margin-bottom: 0.25rem; font-size: 0.82rem; }
+
+    /* ââ Business Cards ââ */
+    .biz-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      margin-bottom: 0.65rem;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .biz-summary {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.8rem 1rem;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .biz-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--accent-light);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+      text-align: center;
+      line-height: 1.1;
+    }
+    .biz-info { flex: 1; min-width: 0; }
+    .biz-info h3 { font-size: 0.88rem; font-weight: 700; color: var(--navy); }
+    .biz-info .loc { font-size: 0.73rem; color: var(--text-muted); }
+    .biz-detail {
+      display: none;
+      padding: 0 1rem 0.85rem;
+      border-top: 1px solid var(--border);
+    }
+    .biz-card.open .biz-detail { display: block; }
+    .biz-card.open .person-arrow { transform: rotate(90deg); color: var(--accent); }
+
+    .biz-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      padding-top: 0.65rem;
+    }
+    .biz-meta-item {
+      font-size: 0.78rem;
+    }
+    .biz-meta-item .label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .biz-meta-item .value { font-weight: 600; color: var(--navy); margin-top: 0.1rem; }
+
+    /* ââ Responsibility Items ââ */
+    .resp-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.65rem;
+      box-shadow: var(--shadow);
+    }
+    .resp-card h4 { font-size: 0.88rem; font-weight: 700; color: var(--navy); margin-bottom: 0.3rem; }
+    .resp-owner {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.15rem 0.6rem;
+      border-radius: 15px;
+      margin-bottom: 0.35rem;
+    }
+    .resp-note { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* ââ Overview Panel ââ */
+    .overview-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 1rem 1.1rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 0.65rem;
+    }
+    .overview-card h3 { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.6rem; }
+    .overview-card ol { padding-left: 1.3rem; font-size: 0.86rem; }
+    .overview-card ol li { margin-bottom: 0.3rem; }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+      margin-bottom: 0.65rem;
+    }
+    .stat-box {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 0.85rem;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .stat-box .num { font-size: 1.6rem; font-weight: 800; color: var(--navy); }
+    .stat-box .label { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; margin-top: 0.15rem; }
+
+    /* ââ Badges ââ */
+    .badge {
+      display: inline-block;
+      padding: 0.12rem 0.5rem;
+      border-radius: 12px;
+      font-size: 0.68rem;
+      font-weight: 600;
+    }
+    .badge-tbd { background: #fef3c7; color: #92400e; }
+    .badge-hire { background: #fee2e2; color: #991b1b; }
+    .badge-active { background: #d1fae5; color: #065f46; }
+
+    /* ââ Location Filter Chips ââ */
+    .filter-row {
+      display: flex;
+      gap: 0.4rem;
+      overflow-x: auto;
+      padding-bottom: 0.65rem;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .filter-row::-webkit-scrollbar { display: none; }
+    .chip {
+      flex-shrink: 0;
+      padding: 0.3rem 0.7rem;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      border: 1.5px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text-muted);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      transition: all 0.15s;
+    }
+    .chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* ââ Empty State ââ */
+    .empty-state {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: var(--text-muted);
+    }
+    .empty-state svg { width: 48px; height: 48px; margin-bottom: 0.75rem; opacity: 0.4; }
+    .empty-state p { font-size: 0.88rem; }
+
+    /* ââ Desktop ââ */
+    @media (min-width: 768px) {
+      .header { padding: 1.5rem 2rem 1rem; }
+      .header h1 { font-size: 1.4rem; }
+      .content { padding: 1rem 1.5rem; }
+      .stat-grid { grid-template-columns: repeat(4, 1fr); }
+      .biz-meta { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    /* ââ No-results highlight ââ */
+    .highlight { background: #fff3bf; border-radius: 2px; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Marketing Accountability</h1>
+  <p>Roles, Reporting Lines &amp; Responsibility Ownership</p>
+</div>
+
+<div class="search-wrap">
+  <div class="search-bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="searchInput" placeholder="Search people, businesses, roles..." autocomplete="off" />
+    <button class="search-clear" id="searchClear" aria-label="Clear search">&times;</button>
+  </div>
+</div>
+
+<div class="tabs" id="tabs">
+  <div class="tab active" data-tab="overview">Overview</div>
+  <div class="tab" data-tab="people">Team</div>
+  <div class="tab" data-tab="businesses">Businesses</div>
+  <div class="tab" data-tab="crossco">Cross-Co</div>
+</div>
+
+<div class="content">
+
+  <!-- âââ OVERVIEW âââ -->
+  <div class="panel active" id="panel-overview">
+    <div class="stat-grid">
+      <div class="stat-box"><div class="num">12</div><div class="label">Team Members</div></div>
+      <div class="stat-box"><div class="num">23</div><div class="label">Businesses</div></div>
+      <div class="stat-box"><div class="num">4</div><div class="label">Locations</div></div>
+      <div class="stat-box"><div class="num">2</div><div class="label">Open Hires</div></div>
+    </div>
+    <div class="overview-card">
+      <h3>This Document Defines</h3>
+      <ol>
+        <li>Roles and responsibilities</li>
+        <li>Designated point person per company</li>
+        <li>Responsibility for strategy, vision, and quality per person</li>
+        <li>Chain of communication between company managers and marketing</li>
+        <li>Delegation structure</li>
+        <li>Oversight of junior staff workload</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- âââ PEOPLE âââ -->
+  <div class="panel" id="panel-people">
+    <div class="filter-row" id="locFilter">
+      <div class="chip active" data-loc="all">All</div>
+      <div class="chip" data-loc="Boston">Boston</div>
+      <div class="chip" data-loc="Lincoln">Lincoln, NH</div>
+      <div class="chip" data-loc="Falmouth">Falmouth</div>
+      <div class="chip" data-loc="Offsite">Offsite</div>
+    </div>
+
+    <div id="peopleList">
+
+      <div class="person-card" data-search="mike cmo creative director boston south peak longfellow lighthouse mountain furniture three suns think tank websites seo aio pr media relations content development mark" data-loc="Boston">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar lead">MC</div>
+          <div class="person-info"><h3>Mike</h3><div class="subtitle">CMO &amp; Creative Director</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Mark</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Boston</div></div>
+          <div class="detail-row"><div class="detail-label">Delegates</div><div class="detail-value">Marketing Team, Think Tank</div></div>
+          <div class="detail-row"><div class="detail-label">Leads</div><div class="detail-value">South Peak, Longfellow, Mountain Furniture, Lighthouse Station, Three Suns</div></div>
+          <div class="detail-row">
+            <div class="detail-label">Duties</div>
+            <div class="detail-value">
+              <ul>
+                <li>Website architect (with Ben and Chris) and creative direction for new website projects</li>
+                <li>Facilitate detailed marketing plans for each company with Jenna / Ashley</li>
+                <li>High-value copywriting, strategic messaging, and campaign concepting</li>
+                <li>Photography direction and production; assist in social content (South Peak, Longfellow)</li>
+                <li>PR strategy and media relationship management</li>
+                <li>Print advertising design for luxury/high-net-worth audiences</li>
+                <li>Executive leadership and resource for Ben, Jenna, Ashley, and Aynslee</li>
+                <li>Oversight of marketing budget and costs</li>
+                <li>Creative oversight and quality control on all outbound materials</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="ben brands manager technology lead design boston newport creamery tides red horse inn think tank agentic portal marketing app marina app waterside app mark mike cnc signage" data-loc="Boston">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar lead">B</div>
+          <div class="person-info"><h3>Ben</h3><div class="subtitle">Brands Manager &amp; Technology Lead</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Mark / Mike</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Boston</div></div>
+          <div class="detail-row"><div class="detail-label">Delegates</div><div class="detail-value">Marketing Team, Think Tank</div></div>
+          <div class="detail-row"><div class="detail-label">Leads</div><div class="detail-value">Newport Creamery, Tides / Red Horse Inn, Harbor Lights</div></div>
+          <div class="detail-row">
+            <div class="detail-label">Duties</div>
+            <div class="detail-value">
+              <ul>
+                <li>Architect and manage production of new apps and websites</li>
+                <li>Train and manage CNC signage operator</li>
+                <li>Co-manage Development Team</li>
+                <li>Brand design execution for new businesses</li>
+                <li>Signage design and production management (all in-house CNC)</li>
+                <li>Technology integration: agentic systems, internal tools</li>
+                <li>Quality review of design deliverables</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="jenna social media content manager falmouth flying bridge marina harborlights mark jake mike photography video" data-loc="Falmouth">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar mid">J</div>
+          <div class="person-info"><h3>Jenna</h3><div class="subtitle">Social Media &amp; Content Manager</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Mark / Jake / Mike</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Falmouth</div></div>
+          <div class="detail-row"><div class="detail-label">Leads</div><div class="detail-value">Flying Bridge Marina, FB Service Center</div></div>
+          <div class="detail-row">
+            <div class="detail-label">Duties</div>
+            <div class="detail-value">
+              <ul>
+                <li>Social media strategy and content production for all companies</li>
+                <li>Content calendar management across all brands</li>
+                <li>Co-manage Video Producer and Jr Designers with Mike &amp; Ben</li>
+                <li>All photography and video content coordination</li>
+                <li>Social community management and engagement across all platforms</li>
+                <li>Social reporting and analytics</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="ashley hubspot crm email marketing sales manager falmouth south peak real estate longfellow lighthouse station mark mike leads" data-loc="Falmouth">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar mid">A</div>
+          <div class="person-info"><h3>Ashley</h3><div class="subtitle">HubSpot CRM &amp; Email Marketing Manager</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Mark / Mike (marketing only)</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Falmouth</div></div>
+          <div class="detail-row"><div class="detail-label">Delegates</div><div class="detail-value">Marketing Team, Think Tank</div></div>
+          <div class="detail-row">
+            <div class="detail-label">Duties</div>
+            <div class="detail-value">
+              <ul>
+                <li>Manage HubSpot CRM administration and lead generation workflows for all companies</li>
+                <li>Manage email marketing execution across the portfolio</li>
+                <li>Lead scoring, nurture sequences, and automation</li>
+                <li>Leads manager for South Peak Resort and Real Estate (with Mike)</li>
+                <li>Leads manager for Longfellow Design Build</li>
+                <li>Leads manager for Lighthouse Station (with Jeannie)</li>
+                <li>Work with company managers to initiate and manage marketing tasks</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="mike collins falmouth fb restaurant longbar weddings timber timber pizza mark cole aynslee" data-loc="Falmouth">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar mid">MJ</div>
+          <div class="person-info"><h3>Mike Collins</h3><div class="subtitle">Restaurant &amp; Events Manager</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Mark</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Falmouth</div></div>
+          <div class="detail-row"><div class="detail-label">Delegates</div><div class="detail-value">Cole / Mike / Aynslee</div></div>
+          <div class="detail-row"><div class="detail-label">Leads</div><div class="detail-value">FB Restaurant, Longbar, Weddings, Timber, Timber Pizza</div></div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="chris matt jones cto it support offsite technology mark mike" data-loc="Offsite">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar mid">CT</div>
+          <div class="person-info"><h3>Chris / Matt Jones</h3><div class="subtitle">CTO &amp; IT Support</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Mark / Mike</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Offsite</div></div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="aynslee junior graphic designer lincoln nh restaurants real estate sales materials mike fb restaurant south peak basecamp snowfish bluebird" data-loc="Lincoln">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar jr">AY</div>
+          <div class="person-info"><h3>Aynslee</h3><div class="subtitle">Junior Graphic Designer</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Mike</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Lincoln, NH</div></div>
+          <div class="detail-row"><div class="detail-label">Leads</div><div class="detail-value">All Restaurants, RE Sales Materials</div></div>
+          <div class="detail-row">
+            <div class="detail-label">Duties</div>
+            <div class="detail-value">
+              <ul>
+                <li>Graphic design production for all restaurants &amp; retail</li>
+                <li>Primary marketing point person for FB Restaurant</li>
+                <li>Assist in social content development for all NH businesses</li>
+                <li>Blogs for South Peak Resort</li>
+                <li>Basic web graphics and email template design</li>
+                <li>Task coordination with South Peak admin support staff</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="mckenna admin events coordination lincoln nh ashley jim marketing support" data-loc="Lincoln">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar jr">MK</div>
+          <div class="person-info"><h3>McKenna</h3><div class="subtitle">Admin / Events Coordination</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Jim / Ashley</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Lincoln, NH</div></div>
+          <div class="detail-row"><div class="detail-label">Duties</div><div class="detail-value">Marketing coordination and administrative support</div></div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="caroline co-op junior graphic designer boston ben design social content" data-loc="Boston">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar jr">C</div>
+          <div class="person-info"><h3>Caroline <span class="badge badge-active">Co-Op</span></h3><div class="subtitle">Junior Graphic Designer</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Ben</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Boston</div></div>
+          <div class="detail-row"><div class="detail-label">Duties</div><div class="detail-value">Graphic design production across all brands; social content production</div></div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="elisa junior designer boston ben design social content" data-loc="Boston">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar jr">E</div>
+          <div class="person-info"><h3>Elisa</h3><div class="subtitle">Junior Designer</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Ben</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Boston</div></div>
+          <div class="detail-row"><div class="detail-label">Duties</div><div class="detail-value">Graphic design production across all brands; social content production</div></div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="buzz co-op videographer production boston mike video july december" data-loc="Boston">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar jr">BZ</div>
+          <div class="person-info"><h3>Buzz <span class="badge badge-active">Co-Op JulâDec</span></h3><div class="subtitle">Videographer &amp; Production</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Mike</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Boston</div></div>
+          <div class="detail-row"><div class="detail-label">Duties</div><div class="detail-value">Video production for social media, websites, and advertising</div></div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="cnc operator signage production lincoln nh ben hire" data-loc="Lincoln">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar hire">?</div>
+          <div class="person-info"><h3>CNC Operator <span class="badge badge-hire">To Hire</span></h3><div class="subtitle">CNC Production Operator</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Ben</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Lincoln, NH</div></div>
+          <div class="detail-row">
+            <div class="detail-label">Duties</div>
+            <div class="detail-value">
+              <ul>
+                <li>Operate CNC machine for all signage across the portfolio</li>
+                <li>Material sourcing and inventory management</li>
+                <li>Signage installation coordination</li>
+                <li>Equipment maintenance and production scheduling</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="think tank agentic lead gen apps paid digital seo aio websites web features boston mike ben development team" data-loc="Boston">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar team">TT</div>
+          <div class="person-info"><h3>Think Tank</h3><div class="subtitle">Agentic Lead Gen, Paid Digital, SEO/AIO, Websites</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Mike / Ben</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Boston</div></div>
+          <div class="detail-row">
+            <div class="detail-label">Functions</div>
+            <div class="detail-value">
+              <ul>
+                <li>Agentic lead generation and apps</li>
+                <li>Paid digital advertising, SEO, and AIO</li>
+                <li>New websites and web features</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="empty-state" id="peopleEmpty" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <p>No team members match your search.</p>
+    </div>
+  </div>
+
+  <!-- âââ BUSINESSES âââ -->
+  <div class="panel" id="panel-businesses">
+    <div class="filter-row" id="bizLocFilter">
+      <div class="chip active" data-loc="all">All</div>
+      <div class="chip" data-loc="Lincoln">Lincoln, NH</div>
+      <div class="chip" data-loc="Falmouth">Falmouth / Cape</div>
+      <div class="chip" data-loc="RI">Rhode Island</div>
+      <div class="chip" data-loc="FL">Florida</div>
+    </div>
+
+    <div id="bizList">
+
+      <div class="biz-card" data-search="south peak resort lincoln nh jim mike lodging hospitality" data-loc="Lincoln">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">SP</div>
+          <div class="biz-info"><h3>South Peak Resort</h3><div class="loc">Lincoln, NH</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Jim</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Mike</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="south peak real estate lincoln nh ashley mike sales" data-loc="Lincoln">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">RE</div>
+          <div class="biz-info"><h3>South Peak Real Estate</h3><div class="loc">Lincoln, NH</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Ashley</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Mike</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="basecamp brewing lincoln nh alex aynslee restaurant bar" data-loc="Lincoln">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">BC</div>
+          <div class="biz-info"><h3>Basecamp Brewing</h3><div class="loc">Lincoln, NH</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Alex</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Aynslee</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="snowfish sushi lincoln nh tbd aynslee restaurant" data-loc="Lincoln">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">SF</div>
+          <div class="biz-info"><h3>Snowfish Sushi</h3><div class="loc">Lincoln, NH</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value"><span class="badge badge-tbd">TBD</span></div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Aynslee</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="timber wood fired nh lincoln tbd aynslee restaurant pizza" data-loc="Lincoln">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">TW</div>
+          <div class="biz-info"><h3>Timber Wood Fired (NH)</h3><div class="loc">Lincoln, NH</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value"><span class="badge badge-tbd">TBD</span></div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Aynslee</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="bluebird martini bar lincoln nh tbd aynslee" data-loc="Lincoln">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">BB</div>
+          <div class="biz-info"><h3>Bluebird Martini Bar</h3><div class="loc">Lincoln, NH</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value"><span class="badge badge-tbd">TBD</span></div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Aynslee</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="the shop at south peak lincoln nh jim aynslee retail" data-loc="Lincoln">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">SH</div>
+          <div class="biz-info"><h3>The Shop at South Peak</h3><div class="loc">Lincoln, NH</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Jim</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Aynslee</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="south peak coffee cart lincoln nh jim aynslee" data-loc="Lincoln">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">CC</div>
+          <div class="biz-info"><h3>South Peak Coffee Cart</h3><div class="loc">Lincoln, NH</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Jim</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Aynslee</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="the mills marketplace lincoln nh jim aynslee retail" data-loc="Lincoln">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">MM</div>
+          <div class="biz-info"><h3>The Mills Marketplace</h3><div class="loc">Lincoln, NH</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Jim</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Aynslee</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="mountain furniture co lincoln nh liz mike tbd" data-loc="Lincoln">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">MF</div>
+          <div class="biz-info"><h3>Mountain Furniture Co.</h3><div class="loc">Lincoln, NH</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Liz <span class="badge badge-tbd">TBD</span></div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Mike</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="whales tale waterpark lincoln nh" data-loc="Lincoln">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">WT</div>
+          <div class="biz-info"><h3>Whale's Tale Waterpark</h3><div class="loc">Lincoln, NH</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">N/A</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">N/A</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="alpine adventures lincoln nh" data-loc="Lincoln">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">AA</div>
+          <div class="biz-info"><h3>Alpine Adventures</h3><div class="loc">Lincoln, NH</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">N/A</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">N/A</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="flying bridge marina falmouth fl florida jenna" data-loc="Falmouth">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">FM</div>
+          <div class="biz-info"><h3>Flying Bridge Marina</h3><div class="loc">Falmouth + FL</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Jenna</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Jenna</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="falmouth tides little blue falmouth ma andi tbd hotel inn" data-loc="Falmouth">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">FT</div>
+          <div class="biz-info"><h3>Falmouth Tides + Little Blue</h3><div class="loc">Falmouth, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Andi</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value"><span class="badge badge-tbd">TBD</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="flying bridge restaurant falmouth ma mike collins aynslee" data-loc="Falmouth">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">FB</div>
+          <div class="biz-info"><h3>Flying Bridge Restaurant</h3><div class="loc">Falmouth, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Mike Collins</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Aynslee</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="timber axe bar bowl falmouth ma cole mike collins aynslee" data-loc="Falmouth">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">TA</div>
+          <div class="biz-info"><h3>Timber Axe Bar &amp; Bowl</h3><div class="loc">Falmouth, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Cole / Mike Collins</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Aynslee</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="timber wood fired ma falmouth cole mike collins aynslee pizza" data-loc="Falmouth">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">TW</div>
+          <div class="biz-info"><h3>Timber Wood Fired (MA)</h3><div class="loc">Falmouth, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Cole / Mike Collins</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Aynslee</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="longfellow design build cape boston nh ashley mike construction" data-loc="Falmouth">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">LF</div>
+          <div class="biz-info"><h3>Longfellow Design Build</h3><div class="loc">Cape / Boston / NH</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Ashley</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Mike</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="lighthouse station woods hole ma ashley jeannie mike" data-loc="Falmouth">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">LS</div>
+          <div class="biz-info"><h3>Lighthouse Station</h3><div class="loc">Woods Hole, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Ashley / Jeannie</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Mike</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="vineyard home cape cod ma theresa mike real estate" data-loc="Falmouth">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">VH</div>
+          <div class="biz-info"><h3>Vineyard Home</h3><div class="loc">Cape Cod, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Theresa</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Mike</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="fb service center fairhaven ma jenna boat marine" data-loc="Falmouth">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">SC</div>
+          <div class="biz-info"><h3>FB Service Center</h3><div class="loc">Fairhaven, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Jenna</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Jenna</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="harbor lights warwick ri melodi ben restaurant" data-loc="RI">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">HL</div>
+          <div class="biz-info"><h3>Harbor Lights</h3><div class="loc">Warwick, RI</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Melodi</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Ben</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="newport creamery multiple ri ma ben ice cream restaurant" data-loc="RI">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">NC</div>
+          <div class="biz-info"><h3>Newport Creamery</h3><div class="loc">Multiple RI/MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Ben</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Ben</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="three suns captiva island fl florida mike felipe" data-loc="FL">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">3S</div>
+          <div class="biz-info"><h3>Three Suns</h3><div class="loc">Captiva Island, FL</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Mike / Felipe</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Mike</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="empty-state" id="bizEmpty" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <p>No businesses match your search.</p>
+    </div>
+  </div>
+
+  <!-- âââ CROSS-COMPANY âââ -->
+  <div class="panel" id="panel-crossco">
+    <div id="crosscoList">
+
+      <div class="resp-card" data-search="marketing plans per company mike managers leads">
+        <h4>Marketing Plans Per Company</h4>
+        <div class="resp-owner">Mike</div>
+        <div class="resp-note">Mike, with company managers and marketing leads, creates and owns the marketing plan for each company.</div>
+      </div>
+
+      <div class="resp-card" data-search="long-form story content mike copywriting approval">
+        <h4>All Long-Form Story Content</h4>
+        <div class="resp-owner">Mike</div>
+        <div class="resp-note">Can be delegated with Mike's final approval.</div>
+      </div>
+
+      <div class="resp-card" data-search="store hours google website yelp aynslee mike collins">
+        <h4>Store Hours (Google, Website, Other)</h4>
+        <div class="resp-owner">Aynslee / Mike Collins</div>
+        <div class="resp-note">Maintenance-level but critical across Google, websites, Yelp, etc.</div>
+      </div>
+
+      <div class="resp-card" data-search="website architecture new builds mike ben longfellow fb marina tides">
+        <h4>Website Architecture (New Builds)</h4>
+        <div class="resp-owner">Mike or Ben</div>
+        <div class="resp-note">Longfellow, FB Marina, New Tides/Red Horse + TBD</div>
+      </div>
+
+      <div class="resp-card" data-search="brand strategy positioning mike all companies">
+        <h4>Brand Strategy &amp; Positioning</h4>
+        <div class="resp-owner">Mike</div>
+        <div class="resp-note">All companies.</div>
+      </div>
+
+      <div class="resp-card" data-search="social media content all companies jenna video producer submissions">
+        <h4>Social Media Content (All Companies)</h4>
+        <div class="resp-owner">Jenna</div>
+        <div class="resp-note">Video Producer, Company Submissions.</div>
+      </div>
+
+      <div class="resp-card" data-search="hubspot crm email marketing ashley think tank mike">
+        <h4>HubSpot CRM / Email Marketing</h4>
+        <div class="resp-owner">Ashley</div>
+        <div class="resp-note">Think Tank, Mike.</div>
+      </div>
+
+      <div class="resp-card" data-search="signage production all companies ben cnc operator">
+        <h4>Signage Production (All Companies)</h4>
+        <div class="resp-owner">Ben + CNC Operator</div>
+      </div>
+
+      <div class="resp-card" data-search="paid media google meta mike dev team advertising">
+        <h4>Paid Media (Google, Meta)</h4>
+        <div class="resp-owner">Mike + Dev Team</div>
+      </div>
+
+      <div class="resp-card" data-search="seo aio mike dev team search optimization">
+        <h4>SEO / AIO</h4>
+        <div class="resp-owner">Mike + Dev Team</div>
+      </div>
+
+      <div class="resp-card" data-search="lead generation systems ben dev team agentic">
+        <h4>Lead Generation Systems</h4>
+        <div class="resp-owner">Ben + Dev Team</div>
+      </div>
+
+      <div class="resp-card" data-search="pr media relationships mike press public relations">
+        <h4>PR &amp; Media Relationships</h4>
+        <div class="resp-owner">Mike</div>
+      </div>
+
+      <div class="resp-card" data-search="photography direction mike jenna video photo">
+        <h4>Photography Direction</h4>
+        <div class="resp-owner">Mike</div>
+        <div class="resp-note">Jenna, Mike.</div>
+      </div>
+
+    </div>
+    <div class="empty-state" id="crosscoEmpty" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <p>No responsibilities match your search.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ââ Tab Switching ââ
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.panel');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // ââ Card Toggles ââ
+  function togglePerson(el) {
+    el.closest('.person-card').classList.toggle('open');
+  }
+  function toggleBiz(el) {
+    el.closest('.biz-card').classList.toggle('open');
+  }
+
+  // ââ Search ââ
+  const searchInput = document.getElementById('searchInput');
+  const searchClear = document.getElementById('searchClear');
+
+  searchInput.addEventListener('input', function() {
+    const q = this.value.toLowerCase().trim();
+    searchClear.classList.toggle('show', q.length > 0);
+    filterCards(q);
+  });
+
+  searchClear.addEventListener('click', () => {
+    searchInput.value = '';
+    searchClear.classList.remove('show');
+    filterCards('');
+    searchInput.focus();
+  });
+
+  function filterCards(q) {
+    // People
+    const people = document.querySelectorAll('#peopleList .person-card');
+    let pVisible = 0;
+    people.forEach(card => {
+      const match = !q || card.dataset.search.includes(q);
+      card.style.display = match ? '' : 'none';
+      if (match) pVisible++;
+      if (match && q) card.classList.add('open');
+      else if (!q) card.classList.remove('open');
+    });
+    document.getElementById('peopleEmpty').style.display = pVisible ? 'none' : 'block';
+
+    // Businesses
+    const biz = document.querySelectorAll('#bizList .biz-card');
+    let bVisible = 0;
+    biz.forEach(card => {
+      const match = !q || card.dataset.search.includes(q);
+      card.style.display = match ? '' : 'none';
+      if (match) bVisible++;
+      if (match && q) card.classList.add('open');
+      else if (!q) card.classList.remove('open');
+    });
+    document.getElementById('bizEmpty').style.display = bVisible ? 'none' : 'block';
+
+    // Cross-co
+    const resp = document.querySelectorAll('#crosscoList .resp-card');
+    let rVisible = 0;
+    resp.forEach(card => {
+      const match = !q || card.dataset.search.includes(q);
+      card.style.display = match ? '' : 'none';
+      if (match) rVisible++;
+    });
+    document.getElementById('crosscoEmpty').style.display = rVisible ? 'none' : 'block';
+
+    // Auto-switch to most relevant tab if searching
+    if (q) {
+      const activeTab = document.querySelector('.tab.active').dataset.tab;
+      if (activeTab === 'overview') {
+        if (pVisible) switchTab('people');
+        else if (bVisible) switchTab('businesses');
+        else if (rVisible) switchTab('crossco');
+      }
+    }
+  }
+
+  function switchTab(name) {
+    tabs.forEach(t => t.classList.remove('active'));
+    panels.forEach(p => p.classList.remove('active'));
+    document.querySelector(`.tab[data-tab="${name}"]`).classList.add('active');
+    document.getElementById('panel-' + name).classList.add('active');
+  }
+
+  // ââ Location Filter (People) ââ
+  document.querySelectorAll('#locFilter .chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('#locFilter .chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const loc = chip.dataset.loc;
+      document.querySelectorAll('#peopleList .person-card').forEach(card => {
+        if (loc === 'all') { card.style.display = ''; }
+        else { card.style.display = card.dataset.loc === loc ? '' : 'none'; }
+      });
+    });
+  });
+
+  // ââ Location Filter (Businesses) ââ
+  document.querySelectorAll('#bizLocFilter .chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('#bizLocFilter .chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const loc = chip.dataset.loc;
+      document.querySelectorAll('#bizList .biz-card').forEach(card => {
+        if (loc === 'all') { card.style.display = ''; }
+        else { card.style.display = card.dataset.loc === loc ? '' : 'none'; }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
