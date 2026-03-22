@@ -1,1 +1,2238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marketing Accountability</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .header p {
+      font-size: 1.1em;
+      opacity: 0.95;
+    }
+
+    .content {
+      padding: 40px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-left: 4px solid #667eea;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .card h2 {
+      color: #667eea;
+      margin-bottom: 15px;
+      font-size: 1.5em;
+    }
+
+    .card p {
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .card ul {
+      margin-left: 20px;
+      color: #555;
+      line-height: 1.8;
+    }
+
+    .card li {
+      margin-bottom: 8px;
+    }
+
+    /* ─── Person Cards ─── */
+    .person-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .person-card {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .person-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .person-card h3 {
+      color: #667eea;
+      margin-bottom: 5px;
+      font-size: 1.3em;
+    }
+
+    .person-card p {
+      color: #555;
+      font-size: 0.95em;
+      margin-bottom: 10px;
+    }
+
+    .person-card .role {
+      background: #667eea;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.85em;
+      display: inline-block;
+    }
+
+    /* ─── KPIs ─── */
+    .kpi-section {
+      background: #f8f9fa;
+      padding: 30px;
+      border-radius: 10px;
+      margin: 30px 0;
+    }
+
+    .kpi-section h2 {
+      color: #667eea;
+      margin-bottom: 20px;
+      font-size: 1.8em;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .kpi-card {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-top: 3px solid #667eea;
+    }
+
+    .kpi-value {
+      font-size: 2.5em;
+      font-weight: 700;
+      color: #667eea;
+      margin-bottom: 5px;
+    }
+
+    .kpi-label {
+      color: #888;
+      font-size: 0.95em;
+    }
+
+    .timeline {
+      position: relative;
+      padding: 20px 0;
+    }
+
+    .timeline-item {
+      display: flex;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 30px;
+      bottom: -30px;
+      width: 2px;
+      background: #667eea;
+    }
+
+    .timeline-item:last-child::before {
+      display: none;
+    }
+
+    .timeline-marker {
+      width: 20px;
+      height: 20px;
+      background: #667eea;
+      border-radius: 50%;
+      position: relative;
+      z-index: 1;
+      margin-right: 20px;
+      margin-top: 2px;
+    }
+
+    .timeline-content {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      flex: 1;
+    }
+
+    .timeline-content h4 {
+      color: #667eea;
+      margin-bottom: 5px;
+    }
+
+    .timeline-content p {
+      color: #555;
+      font-size: 0.95em;
+      line-height: 1.5;
+    }
+
+    .biz-meta {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .biz-meta-item {
+      background: white;
+      padding: 12px;
+      border-radius: 5px;
+      border-left: 3px solid #667eea;
+    }
+
+    .biz-meta-label {
+      color: #888;
+      font-size: 0.85em;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .biz-meta-value {
+      color: #667eea;
+      font-weight: 700;
+      font-size: 1.1em;
+    }
+
+    .footer {
+      background: #f8f9fa;
+      padding: 20px;
+      text-align: center;
+      color: #888;
+      font-size: 0.9em;
+      border-top: 1px solid #eee;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 1.8em;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .person-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .biz-meta {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>📊 Marketing Accountability</h1>
+      <p>Tracking Performance & Growth Metrics</p>
+    </div>
+
+    <div class="content">
+      <!-- Vision & Mission -->
+      <div class="card">
+        <h2>Vision & Mission</h2>
+        <p>
+          Our marketing team is committed to delivering measurable results and driving business growth through data-driven strategies and innovative campaigns.
+        </p>
+        <ul>
+          <li>Increase brand awareness by 40% annually</li>
+          <li>Generate qualified leads with 15%+ conversion rate</li>
+          <li>Improve customer retention to 85%+</li>
+          <li>Achieve ROI of 4:1 on marketing investments</li>
+        </ul>
+      </div>
+
+      <!-- Team Members -->
+      <h2 style="color: #667eea; margin-top: 40px; margin-bottom: 20px;">Our Team</h2>
+      <div class="person-grid">
+        <div class="person-card">
+          <h3>Sarah Johnson</h3>
+          <p>sarah@company.com</p>
+          <span class="role">Marketing Director</span>
+          <div class="biz-meta">
+            <div class="biz-meta-item">
+              <div class="biz-meta-label">Budget</div>
+              <div class="biz-meta-value">$500K</div>
+            </div>
+            <div class="biz-meta-item">
+              <div class="biz-meta-label">Reports</div>
+              <div class="biz-meta-value">5</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="person-card">
+          <h3>Mike Chen</h3>
+          <p>mike@company.com</p>
+          <span class="role">Content Strategist</span>
+          <div class="biz-meta">
+            <div class="biz-meta-item">
+              <div class="biz-meta-label">Posts/Month</div>
+              <div class="biz-meta-value">24</div>
+            </div>
+            <div class="biz-meta-item">
+              <div class="biz-meta-label">Engagement</div>
+              <div class="biz-meta-value">8.5%</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="person-card">
+          <h3>Emily Rodriguez</h3>
+          <p>emily@company.com</p>
+          <span class="role">Digital Marketing Lead</span>
+          <div class="biz-meta">
+            <div class="biz-meta-item">
+              <div class="biz-meta-label">Campaigns</div>
+              <div class="biz-meta-value">12</div>
+            </div>
+            <div class="biz-meta-item">
+              <div class="biz-meta-label">Conv. Rate</div>
+              <div class="biz-meta-value">12.3%</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="person-card">
+          <h3>James Wilson</h3>
+          <p>james@company.com</p>
+          <span class="role">Analytics Manager</span>
+          <div class="biz-meta">
+            <div class="biz-meta-item">
+              <div class="biz-meta-label">Reports</div>
+              <div class="biz-meta-value">Weekly</div>
+            </div>
+            <div class="biz-meta-item">
+              <div class="biz-meta-label">Data Points</div>
+              <div class="biz-meta-value">50+</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Performance Indicators -->
+      <div class="kpi-section">
+        <h2>Key Performance Indicators</h2>
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-value">42%</div>
+            <div class="kpi-label">YoY Growth</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value">18.5K</div>
+            <div class="kpi-label">New Leads</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value">$2.1M</div>
+            <div class="kpi-label">Revenue Generated</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value">3.8:1</div>
+            <div class="kpi-label">Marketing ROI</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value">82%</div>
+            <div class="kpi-label">Customer Retention</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value">14.2K</div>
+            <div class="kpi-label">Social Followers</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Goals and Objectives -->
+      <div class="grid">
+        <div class="card">
+          <h2>Q1 Goals</h2>
+          <ul>
+            <li>Launch 3 major campaigns</li>
+            <li>Increase website traffic by 25%</li>
+            <li>Generate 2,500 new qualified leads</li>
+            <li>Improve email open rate to 30%</li>
+            <li>Expand social media presence by 20%</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Q2 Priorities</h2>
+          <ul>
+            <li>Optimize conversion funnel</li>
+            <li>Launch podcast series</li>
+            <li>Develop 5 case studies</li>
+            <li>Implement marketing automation</li>
+            <li>Increase partnership opportunities</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Q3 Initiatives</h2>
+          <ul>
+            <li>Rebrand marketing materials</li>
+            <li>Launch video content series</li>
+            <li>Develop SEO strategy</li>
+            <li>Expand paid advertising budget</li>
+            <li>Build influencer partnerships</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Q4 Focus</h2>
+          <ul>
+            <li>Year-end campaign push</li>
+            <li>Holiday marketing strategy</li>
+            <li>Plan next year budget</li>
+            <li>Review and optimize all metrics</li>
+            <li>Team training and development</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Project Timeline -->
+      <h2 style="color: #667eea; margin-top: 40px; margin-bottom: 20px;">Project Timeline</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <h4>Brand Refresh Initiative</h4>
+            <p>Complete rebranding of marketing materials and website design. Expected to improve brand recognition by 30%.</p>
+            <strong>Timeline: Jan - Mar</strong>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <h4>Content Marketing Expansion</h4>
+            <p>Launch comprehensive content strategy including blog, video, and podcast series to establish thought leadership.</p>
+            <strong>Timeline: Feb - Jun</strong>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <h4>Digital Campaign Series</h4>
+            <p>Execute 6 targeted digital campaigns across multiple channels with focus on conversion optimization.</p>
+            <strong>Timeline: Mar - Sep</strong>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <h4>Analytics & Optimization</h4>
+            <p>Implement advanced analytics and continuously optimize marketing funnel based on data-driven insights.</p>
+            <strong>Timeline: Apr - Dec</strong>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <h4>Partnership Development</h4>
+            <p>Build strategic partnerships with complementary brands and influencers to expand market reach.</p>
+            <strong>Timeline: May - Nov</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Success Metrics -->
+      <div class="card" style="margin-top: 40px;">
+        <h2>Success Metrics & Accountability</h2>
+        <p>Our team commits to the following measurable outcomes:</p>
+        <ul>
+          <li><strong>Lead Generation:</strong> 500+ qualified leads per month with minimum 15% conversion rate</li>
+          <li><strong>Brand Awareness:</strong> 40% YoY increase in brand mentions and reach across all channels</li>
+          <li><strong>Customer Retention:</strong> Maintain 85%+ retention rate and improve NPS to 70+</li>
+          <li><strong>ROI Performance:</strong> Achieve minimum 4:1 return on marketing investment across all campaigns</li>
+          <li><strong>Digital Presence:</strong> Grow social following by 50% and increase engagement rate to 10%+</li>
+          <li><strong>Content Performance:</strong> Publish minimum 4 high-quality content pieces per week with 30%+ engagement</li>
+          <li><strong>Campaign Efficiency:</strong> Reduce customer acquisition cost by 20% while maintaining quality</li>
+          <li><strong>Team Development:</strong> Complete certification programs and maintain 95% meeting attendance</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>&copy; 2024 Marketing Accountability Dashboard. Last updated: January 2024</p>
+    </div>
+  </div>
+</body>
+</html>  /* ────── Person Cards ────── */
+    .person-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      margin-bottom: 0.65rem;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .person-card:active { box-shadow: var(--shadow-lg); }
+    .person-summary {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1rem;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .avatar.lead { background: var(--navy); }
+    .avatar.mid { background: var(--accent); }
+    .avatar.jr { background: #7c8baa; }
+    .avatar.hire { background: var(--warning); }
+    .avatar.team { background: var(--slate); }
+    .person-info { flex: 1; min-width: 0; }
+    .person-info h3 { font-size: 0.92rem; font-weight: 700; color: var(--navy); }
+    .person-info .subtitle { font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .person-arrow {
+      width: 20px; height: 20px; color: var(--border);
+      transition: transform 0.2s, color 0.2s;
+      flex-shrink: 0;
+    }
+    .person-card.open .person-arrow { transform: rotate(90deg); color: var(--accent); }
+
+    .person-detail {
+      display: none;
+      padding: 0 1rem 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .person-card.open .person-detail { display: block; }
+
+    .detail-row {
+      display: flex;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid #f0f2f5;
+      font-size: 0.82rem;
+    }
+    .detail-row:last-child { border-bottom: none; }
+    .detail-label {
+      width: 95px;
+      flex-shrink: 0;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding-top: 0.1rem;
+    }
+    .detail-value { flex: 1; }
+    .detail-value ul { padding-left: 1.1rem; margin: 0; }
+    .detail-value ul li { margin-bottom: 0.25rem; font-size: 0.82rem; }
+
+    /* ────── Business Cards ────── */
+    .biz-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      margin-bottom: 0.65rem;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .biz-summary {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.8rem 1rem;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .biz-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--accent-light);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+      text-align: center;
+      line-height: 1.1;
+    }
+    .biz-info { flex: 1; min-width: 0; }
+    .biz-info h3 { font-size: 0.88rem; font-weight: 700; color: var(--navy); }
+    .biz-info .loc { font-size: 0.73rem; color: var(--text-muted); }
+    .biz-detail {
+      display: none;
+      padding: 0 1rem 0.85rem;
+      border-top: 1px solid var(--border);
+    }
+    .biz-card.open .biz-detail { display: block; }
+    .biz-card.open .person-arrow { transform: rotate(90deg); color: var(--accent); }
+; }
+
+    .biz-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      padding-top: 0.65rem;
+    }
+    .biz-meta-item {
+      font-size: 0.78rem;
+    }
+    .biz-meta-item .label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .biz-meta-item .value { font-weight: 600; color: var(--navy); margin-top: 0.1rem; }
+
+    /* ────── Responsibility Items ────── */
+    .resp-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.65rem;
+      box-shadow: var(--shadow);
+    }
+    .resp-card h4 { font-size: 0.88rem; font-weight: 700; color: var(--navy); margin-bottom: 0.3rem; }
+    .resp-owner {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.15rem 0.6rem;
+      border-radius: 15px;
+      margin-bottom: 0.35rem;
+    }
+    .resp-note { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* ────── Overview Panel ────── */
+    .overview-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 1rem 1.1rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 0.65rem;
+    }
+    .overview-card h3 { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.6rem; }
+    .overview-card ol { padding-left: 1.3rem; font-size: 0.86rem; }
+    .overview-card ol li { margin-bottom: 0.3rem; }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+      margin-bottom: 0.65rem;
+    }
+    .stat-box {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 0.85rem;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .stat-box .num { font-size: 1.6rem; font-weight: 800; color: var(--navy); }
+    .stat-box .label { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; margin-top: 0.15rem; }
+
+    /* ────── Badges ────── */
+    .badge {
+      display: inline-block;
+      padding: 0.12rem 0.5rem;
+      border-radius: 12px;
+      font-size: 0.68rem;
+      font-weight: 600;
+    }
+    .badge-tbd { background: #fef3c7; color: #92400e; }
+    .badge-hire { background: #fee2e2; color: #991b1b; }
+    .badge-active { background: #d1fae5; color: #065f46; }
+
+    /* ────── Location Filter Chips ────── */
+    .filter-row {
+      display: flex;
+      gap: 0.4rem;
+      overflow-x: auto;
+      padding-bottom: 0.65rem;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .filter-row::-webkit-scrollbar { display: none; }
+    .chip {
+      flex-shrink: 0;
+      padding: 0.3rem 0.7rem;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      border: 1.5px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text-muted);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      transition: all 0.15s;
+    }
+    .chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* ────── Empty State ────── */
+    .empty-state {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: var(--text-muted);
+    }
+    .empty-state svg { width: 48px; height: 48px; margin-bottom: 0.75rem; opacity: 0.4; }
+    .empty-state p { font-size: 0.88rem; }
+
+    /* ────── Desktop ────── */
+    @media (min-width: 768px) {
+      .header { padding: 1.5rem 2rem 1rem; }
+      .header h1 { font-size: 1.4rem; }
+      .content { padding: 1rem 1.5rem; }
+      .stat-grid { grid-template-columns: repeat(4, 1fr); }
+      .person-grid { grid-template-columns: repeat(2, 1fr); }
+      .biz-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- ═══ HEADER ═══ -->
+    <div class="header">
+      <h1>📋 Marketing Accountability</h1>
+      <p>Track people, responsibilities & business metrics</p>
+    </div>
+
+    <!-- ═══ NAVIGATION ═══ -->
+    <div class="nav-tabs">
+      <button class="nav-tab active" data-tab="people">People</button>
+      <button class="nav-tab" data-tab="biz">Businesses</button>
+      <button class="nav-tab" data-tab="resp">Responsibilities</button>
+      <button class="nav-tab" data-tab="metrics">Metrics</button>
+    </div>
+
+    <!-- ═══ CONTENT ═══ -->
+    <div class="content">
+      <!-- ========== PEOPLE TAB ========== -->
+      <div class="panel active" id="people">
+        <div class="panel-header">Team Members</div>
+
+        <div class="stat-grid">
+          <div class="stat-box"><div class="num">18</div><div class="label">Total</div></div>
+          <div class="stat-box"><div class="num">15</div><div class="label">Active</div></div>
+          <div class="stat-box"><div class="num">2</div><div class="label">New Hire</div></div>
+          <div class="stat-box"><div class="num">1</div><div class="label">TBD</div></div>
+        </div>
+
+        <div class="person-grid">
+          <div class="person-card" data-search="sarah johnson director marketing budget">
+            <div class="person-summary" onclick="togglePerson(this)">
+              <div class="avatar lead">SJ</div>
+              <div class="person-info"><h3>Sarah Johnson</h3><div class="subtitle">Director of Marketing</div></div>
+              <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+            </div>
+            <div class="person-detail">
+              <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value">sarah@company.com</div></div>
+              <div class="detail-row"><div class="detail-label">Budget</div><div class="detail-value">$500K</div></div>
+              <div class="detail-row"><div class="detail-label">Reports</div><div class="detail-value">5 people</div></div>
+              <div class="detail-row"><div class="detail-label">Responsibilities</div><div class="detail-value"><ul><li>Strategy</li><li>Budget</li><li>Hiring</li></ul></div></div>
+            </div>
+          </div>
+
+          <div class="person-card" data-search="mike chen strategist content planning">
+            <div class="person-summary" onclick="togglePerson(this)">
+              <div class="avatar mid">MC</div>
+              <div class="person-info"><h3>Mike Chen</h3><div class="subtitle">Content Strategist</div></div>
+              <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+            </div>
+            <div class="person-detail">
+              <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value">mike@company.com</div></div>
+              <div class="detail-row"><div class="detail-label">Posts/Mo</div><div class="detail-value">24</div></div>
+              <div class="detail-row"><div class="detail-label">Engagement</div><div class="detail-value">8.5%</div></div>
+              <div class="detail-row"><div class="detail-label">Specialties</div><div class="detail-value"><ul><li>Content</li><li>Social</li><li>Copywriting</li></ul></div></div>
+            </div>
+          </div>
+
+          <div class="person-card" data-search="emily rodriguez digital marketing campaigns conversion">
+            <div class="person-summary" onclick="togglePerson(this)">
+              <div class="avatar mid">ER</div>
+              <div class="person-info"><h3>Emily Rodriguez</h3><div class="subtitle">Digital Marketing Lead</div></div>
+              <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+            </div>
+            <div class="person-detail">
+              <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value">emily@company.com</div></div>
+              <div class="detail-row"><div class="detail-label">Campaigns</div><div class="detail-value">12/year</div></div>
+              <div class="detail-row"><div class="detail-label">Conv. Rate</div><div class="detail-value">12.3%</div></div>
+              <div class="detail-row"><div class="detail-label">Focus Areas</div><div class="detail-value"><ul><li>Paid Ads</li><li>Landing Pages</li><li>Optimization</li></ul></div></div>
+            </div>
+          </div>
+
+          <div class="person-card" data-search="james wilson analytics reporting data">
+            <div class="person-summary" onclick="togglePerson(this)">
+              <div class="avatar mid">JW</div>
+              <div class="person-info"><h3>James Wilson</h3><div class="subtitle">Analytics Manager</div></div>
+              <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+            </div>
+            <div class="person-detail">
+              <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value">james@company.com</div></div>
+              <div class="detail-row"><div class="detail-label">Reports</div><div class="detail-value">Weekly</div></div>
+              <div class="detail-row"><div class="detail-label">Data Points</div><div class="detail-value">50+</div></div>
+              <div class="detail-row"><div class="detail-label">Tools</div><div class="detail-value"><ul><li>GA4</li><li>Mixpanel</li><li>SQL</li></ul></div></div>
+            </div>
+          </div>
+
+          <div class="person-card" data-search="david park designer ui ux visual">
+            <div class="person-summary" onclick="togglePerson(this)">
+              <div class="avatar mid">DP</div>
+              <div class="person-info"><h3>David Park</h3><div class="subtitle">Designer</div></div>
+              <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+            </div>
+            <div class="person-detail">
+              <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value">david@company.com</div></div>
+              <div class="detail-row"><div class="detail-label">Projects</div><div class="detail-value">8/year</div></div>
+              <div class="detail-row"><div class="detail-label">Turnaround</div><div class="detail-value">2-3 weeks</div></div>
+              <div class="detail-row"><div class="detail-label">Disciplines</div><div class="detail-value"><ul><li>UI/UX</li><li>Branding</li><li>Web</li></ul></div></div>
+            </div>
+          </div>
+
+          <div class="person-card" data-search="jessica events partnership spon">
+            <div class="person-summary" onclick="togglePerson(this)">
+              <div class="avatar mid">JL</div>
+              <div class="person-info"><h3>Jessica Lee</h3><div class="subtitle">Events & Partnerships</div></div>
+              <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+            </div>
+            <div class="person-detail">
+              <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value">jessica@company.com</div></div>
+              <div class="detail-row"><div class="detail-label">Events</div><div class="detail-value">4/year</div></div>
+              <div class="detail-row"><div class="detail-label">Attendees</div><div class="detail-value">500+</div></div>
+              <div class="detail-row"><div class="detail-label">Specialties</div><div class="detail-value"><ul><li>Planning</li><li>Sponsorships</li><li>Outreach</li></ul></div></div>
+            </div>
+          </div>
+
+          <div class="person-card" data-search="alex taylor pr communications press">
+            <div class="person-summary" onclick="togglePerson(this)">
+              <div class="avatar mid">AT</div>
+              <div class="person-info"><h3>Alex Taylor</h3><div class="subtitle">PR & Communications</div></div>
+              <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+            </div>
+            <div class="person-detail">
+              <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value">alex@company.com</div></div>
+              <div class="detail-row"><div class="detail-label">Pitches</div><div class="detail-value">12/month</div></div>
+              <div class="detail-row"><div class="detail-label">Press</div><div class="detail-value">6/quarter</div></div>
+              <div class="detail-row"><div class="detail-label">Focus</div><div class="detail-value"><ul><li>Tech Press</li><li>Comms</li><li>Strategy</li></ul></div></div>
+            </div>
+          </div>
+
+          <div class="person-card" data-search="sophia rodriguez seo search engine">
+            <div class="person-summary" onclick="togglePerson(this)">
+              <div class="avatar mid">SR</div>
+              <div class="person-info"><h3>Sophia Rodriguez</h3><div class="subtitle">SEO Specialist</div></div>
+              <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+            </div>
+            <div class="person-detail">
+              <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value">sophia@company.com</div></div>
+              <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Boston</div></div>
+              <div class="detail-row"><div class="detail-label">Delegates</div><div class="detail-value">Marketing Team"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="person-card" data-search="ryan green social media seo facebook instagram">
+          <div class="person-summary" onclick="togglePerson(this)">
+            <div class="avatar mid">RG</div>
+            <div class="person-info"><h3>Ryan Green</h3><div class="subtitle">Social Media Manager</div></div>
+            <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+          <div class="person-detail">
+            <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value">ryan@company.com</div></div>
+            <div class="detail-row"><div class="detail-label">Posts/Wk</div><div class="detail-value">15</div></div>
+            <div class="detail-row"><div class="detail-label">Engagement</div><div class="detail-value">7.2%</div></div>
+            <div class="detail-row"><div class="detail-label">Platforms</div><div class="detail-value"><ul><li>Instagram</li><li>TikTok</li><li>LinkedIn</li></ul></div></div>
+          </div>
+        </div>
+
+        <div class="person-card" data-search="jenny smith email marketing automation">
+          <div class="person-summary" onclick="togglePerson(this)">
+            <div class="avatar mid">JS</div>
+            <div class="person-info"><h3>Jenny Smith</h3><div class="subtitle">Email Marketing</div></div>
+            <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+          <div class="person-detail">
+            <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value">jenny@company.com</div></div>
+            <div class="detail-row"><div class="detail-label">Campaigns</div><div class="detail-value">20/month</div></div>
+            <div class="detail-row"><div class="detail-label">Open Rate</div><div class="detail-value">32%</div></div>
+            <div class="detail-row"><div class="detail-label">Tools</div><div class="detail-value"><ul><li>Hubspot</li><li>Mailchimp</li><li>Klaviyo</li></ul></div></div>
+          </div>
+        </div>
+
+        <div class="person-card" data-search="marcus williams paid ads ppc google facebook">
+          <div class="person-summary" onclick="togglePerson(this)">
+            <div class="avatar mid">MW</div>
+            <div class="person-info"><h3>Marcus Williams</h3><div class="subtitle">Paid Ads Specialist</div></div>
+            <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+          <div class="person-detail">
+            <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value">marcus@company.com</div></div>
+            <div class="detail-row"><div class="detail-label">Budget</div><div class="detail-value">$200K</div></div>
+            <div class="detail-row"><div class="detail-label">ROAS</div><div class="detail-value">5.2:1</div></div>
+            <div class="detail-row"><div class="detail-label">Platforms</div><div class="detail-value"><ul><li>Google</li><li>Meta</li><li>LinkedIn</li></ul></div></div>
+          </div>
+        </div>
+
+        <div class="person-card" data-search="natalie baker customer marketing account">
+          <div class="person-summary" onclick="togglePerson(this)">
+            <div class="avatar mid">NB</div>
+            <div class="person-info"><h3>Natalie Baker</h3><div class="subtitle">Customer Marketing</div></div>
+            <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+          <div class="person-detail">
+            <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value">natalie@company.com</div></div>
+            <div class="detail-row"><div class="detail-label">Accounts</div><div class="detail-value">45</div></div>
+            <div class="detail-row"><div class="detail-label">Expansion</div><div class="detail-value">18%</div></div>
+            <div class="detail-row"><div class="detail-label">Focus</div><div class="detail-value"><ul><li>Retention</li><li>Expansion</li><li>Advocacy</li></ul></div></div>
+          </div>
+        </div>
+
+        <div class="person-card" data-search="christopher baker market research insights">
+          <div class="person-summary" onclick="togglePerson(this)">
+            <div class="avatar mid">CB</div>
+            <div class="person-info"><h3>Christopher Baker</h3><div class="subtitle">Market Research</div></div>
+            <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+          <div class="person-detail">
+            <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value">christopher@company.com</div></div>
+            <div class="detail-row"><div class="detail-label">Studies</div><div class="detail-value">4/year</div></div>
+            <div class="detail-row"><div class="detail-label">Respondents</div><div class="detail-value">1500+</div></div>
+            <div class="detail-row"><div class="detail-label">Methods</div><div class="detail-value"><ul><li>Surveys</li><li>Interviews</li><li>Testing</li></ul></div></div>
+          </div>
+        </div>
+
+        <div class="person-card" data-search="olivia martinez product marketing positioning">
+          <div class="person-summary" onclick="togglePerson(this)">
+            <div class="avatar mid">OM</div>
+            <div class="person-info"><h3>Olivia Martinez</h3><div class="subtitle">Product Marketing</div></div>
+            <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+          <div class="person-detail">
+            <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value">olivia@company.com</div></div>
+            <div class="detail-row"><div class="detail-label">Launches</div><div class="detail-value">3/year</div></div>
+            <div class="detail-row"><div class="detail-label">Success</div><div class="detail-value">95%</div></div>
+            <div class="detail-row"><div class="detail-label">Areas</div><div class="detail-value"><ul><li>Messaging</li><li>Positioning</li><li>Launches</li></ul></div></div>
+          </div>
+        </div>
+
+        <div class="person-card" data-search="lucas ross video production youtube">
+          <div class="person-summary" onclick="togglePerson(this)">
+            <div class="avatar mid">LR</div>
+            <div class="person-info"><h3>Lucas Ross</h3><div class="subtitle">Video Producer</div></div>
+            <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+          <div class="person-detail">
+            <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value">lucas@company.com</div></div>
+            <div class="detail-row"><div class="detail-label">Videos</div><div class="detail-value">12/year</div></div>
+            <div class="detail-row"><div class="detail-label">Views</div><div class="detail-value">500K+</div></div>
+            <div class="detail-row"><div class="detail-label">Expertise</div><div class="detail-value"><ul><li>Editing</li><li>Animation</li><li>Storytelling</li></ul></div></div>
+          </div>
+        </div>
+
+        <div class="person-card" data-search="isabella torres affiliate partnerships influencer">
+          <div class="person-summary" onclick="togglePerson(this)">
+            <div class="avatar mid">IT</div>
+            <div class="person-info"><h3>Isabella Torres</h3><div class="subtitle">Affiliate Manager</div></div>
+            <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+          <div class="person-detail">
+            <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value">isabella@company.com</div></div>
+            <div class="detail-row"><div class="detail-label">Partners</div><div class="detail-value">28</div></div>
+            <div class="detail-row"><div class="detail-label">Revenue</div><div class="detail-value">$180K</div></div>
+            <div class="detail-row"><div class="detail-label">Commission</div><div class="detail-value"><ul><li>Tier 1: 5%</li><li>Tier 2: 8%</li><li>Tier 3: 12%</li></ul></div></div>
+          </div>
+        </div>
+
+        <div class="person-card" data-search="robert zhang growth experiments optimization ab test">
+          <div class="person-summary" onclick="togglePerson(this)">
+            <div class="avatar mid">RZ</div>
+            <div class="person-info"><h3>Robert Zhang</h3><div class="subtitle">Growth Lead</div></div>
+            <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+          <div class="person-detail">
+            <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value">robert@company.com</div></div>
+            <div class="detail-row"><div class="detail-label">Experiments</div><div class="detail-value">15/month</div></div>
+            <div class="detail-row"><div class="detail-label">Win Rate</div><div class="detail-value">28%</div></div>
+            <div class="detail-row"><div class="detail-label">Methods</div><div class="detail-value"><ul><li>A/B Testing</li><li>Cohort Analysis</li><li>Funnels</li></ul></div></div>
+          </div>
+        </div>
+
+        <div class="person-card" data-search="elizabeth lee web developer frontend engineering">
+          <div class="person-summary" onclick="togglePerson(this)">
+            <div class="avatar jr">EL</div>
+            <div class="person-info"><h3>Elizabeth Lee</h3><div class="subtitle">Junior Developer</div></div>
+            <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+          <div class="person-detail">
+            <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value">elizabeth@company.com</div></div>
+            <div class="detail-row"><div class="detail-label">Projects</div><div class="detail-value">12/year</div></div>
+            <div class="detail-row"><div class="detail-label">Turnaround</div><div class="detail-value">1-2 weeks</div></div>
+            <div class="detail-row"><div class="detail-label">Stack</div><div class="detail-value"><ul><li>React</li><li>Vue</li><li>CSS</li></ul></div></div>
+          </div>
+        </div>
+
+        <div class="person-card" data-search="thomas anderson technical seo mike photography video mark cole aynslee data-loc=Falmouth">
+          <div class="person-summary" onclick="togglePerson(this)">
+            <div class="avatar mid">TA</div>
+            <div class="person-info"><h3>Thomas Anderson</h3><div class="subtitle">Technical SEO</div></div>
+            <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+          <div class="person-detail">
+            <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value">thomas@company.com</div></div>
+            <div class="detail-row"><div class="detail-label">Keywords</div><div class="detail-value">500+</div></div>
+            <div class="detail-row"><div class="detail-label">Ranking 1</div><div class="detail-value">180</div></div>
+            <div class="detail-row"><div class="detail-label">Tools</div><div class="detail-value"><ul><li>Ahrefs</li><li>SE Ranking</li><li>Screaming Frog</li></ul></div></div>
+          </div>
+        </div>
+      </div>
+      <!-- Empty state -->
+      <div id="emptyPeople" class="empty-state" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <p>No team members match your search.</p>
+      </div>
+    </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                              BUSINESSES
+  ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════ -->
+  <div class="panel" id="biz">
+    <div class="panel-header">Business Entities</div>
+
+    <div class="filter-row" id="bizLocFilter">
+      <div class="chip active" data-loc="">All Locations</div>
+      <div class="chip" data-loc="Falmouth">Falmouth</div>
+      <div class="chip" data-loc="Boston">Boston</div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-box"><div class="num">12</div><div class="label">Total Biz</div></div>
+      <div class="stat-box"><div class="num">3</div><div class="label">Locations</div></div>
+      <div class="stat-box"><div class="num">$2.5M</div><div class="label">Revenue</div></div>
+      <div class="stat-box"><div class="num">85</div><div class="label">Employees</div></div>
+    </div>
+
+    <div class="biz-grid">
+      <div class="biz-card" data-search="cornerstone cafe coffee restaurant falmouth ma" data-loc="Falmouth">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">CC</div>
+          <div class="biz-info"><h3>Cornerstone Café</h3><div class="loc">Falmouth, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Sarah Johnson</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Mike Chen</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$450K</div></div>
+            <div class="biz-meta-item"><div class="label">Staff</div><div class="value">12</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="harbor view hotel resort lodging falmouth ma" data-loc="Falmouth">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">HV</div>
+          <div class="biz-info"><h3>Harbor View Hotel</h3><div class="loc">Falmouth, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value"><span class="badge badge-tbd">TBD</span></div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Aynslee</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$680K</div></div>
+            <div class="biz-meta-item"><div class="label">Staff</div><div class="value">28</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="sail point marina water sports nautical falmouth ma" data-loc="Falmouth">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">SP</div>
+          <div class="biz-info"><h3>Sail Point Marina</h3><div class="loc">Falmouth, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">James Wilson</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Ryan Green</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$320K</div></div>
+            <div class="biz-meta-item"><div class="label">Staff</div><div class="value">8</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="flying bridge marina water sports nautical falmouth ma" data-loc="Falmouth">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">FM</div>
+          <div class="biz-info"><h3>Flying Bridge Marina</h3><div class="loc">Falmouth, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">David Park</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Jenny Smith</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$215K</div></div>
+            <div class="biz-meta-item"><div class="label">Staff</div><div class="value">6</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="wood fired (ma) restaurant pizza falmouth" data-loc="Falmouth">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">WF</div>
+          <div class="biz-info"><h3>Wood Fired (MA)</h3><div class="loc">Falmouth, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Emily Rodriguez</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Sophia Rodriguez</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$380K</div></div>
+            <div class="biz-meta-item"><div class="label">Staff</div><div class="value">11</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="maritime gallery art museum falmouth" data-loc="Falmouth">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">MG</div>
+          <div class="biz-info"><h3>Maritime Gallery</h3><div class="loc">Falmouth, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value"><span class="badge badge-hire">HIRING</span></div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Alex Taylor</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$125K</div></div>
+            <div class="biz-meta-item"><div class="label">Staff</div><div class="value">4</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="tech hub boston office coworking space boston ma" data-loc="Boston">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">TH</div>
+          <div class="biz-info"><h3>Tech Hub Boston</h3><div class="loc">Boston, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Sarah Johnson</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Marcus Williams</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$520K</div></div>
+            <div class="biz-meta-item"><div class="label">Staff</div><div class="value">15</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="grow wellness center spa fitness boston" data-loc="Boston">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">GW</div>
+          <div class="biz-info"><h3>Grow Wellness</h3><div class="loc">Boston, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Jessica Lee</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Natalie Baker</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$340K</div></div>
+            <div class="biz-meta-item"><div class="label">Staff</div><div class="value">9</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="inno ventures lab startup accelerator boston" data-loc="Boston">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">IV</div>
+          <div class="biz-info"><h3>Inno Ventures</h3><div class="loc">Boston, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Christopher Baker</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Olivia Martinez</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$600K</div></div>
+            <div class="biz-meta-item"><div class="label">Staff</div><div class="value">18</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="creative studios media production boston" data-loc="Boston">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">CS</div>
+          <div class="biz-info"><h3>Creative Studios</h3><div class="loc">Boston, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Lucas Ross</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Isabella Torres</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$290K</div></div>
+            <div class="biz-meta-item"><div class="label">Staff</div><div class="value">7</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="summit capital consulting venture firm boston" data-loc="Boston">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">SC</div>
+          <div class="biz-info"><h3>Summit Capital</h3><div class="loc">Boston, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Robert Zhang</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Elizabeth Lee</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$750K</div></div>
+            <div class="biz-meta-item"><div class="label">Staff</div><div class="value">22</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty state -->
+    <div id="emptyBiz" class="empty-state" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3"/><polyline points="12 12 20 7.5"/><polyline points="12 12 12 21"/><polyline points="12 12 4 7.5"/></svg>
+      <p>No businesses match your filters.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                          RESPONSIBILITIES
+  ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════ -->
+  <div class="panel" id="resp">
+    <div class="panel-header">Responsibilities & Ownership</div>
+
+    <div class="stat-grid">
+      <div class="stat-box"><div class="num">24</div><div class="label">Total Resp</div></div>
+      <div class="stat-box"><div class="num">18</div><div class="label">Assigned</div></div>
+      <div class="stat-box"><div class="num">4</div><div class="label">In Progress</div></div>
+      <div class="stat-box"><div class="num">2</div><div class="label">Pending</div></div>
+    </div>
+
+    <div class="resp-card" data-search="brand strategy annual planning direction messaging">
+      <h4>Brand Strategy & Positioning</h4>
+      <div class="resp-owner">Sarah Johnson</div>
+      <div class="resp-note">Develop and maintain overall brand direction, messaging hierarchy, and market positioning across all business entities. Lead annual brand strategy planning sessions with leadership team.</div>
+    </div>
+
+    <div class="resp-card" data-search="digital strategy omnichannel campaigns optimization">
+      <h4>Digital Marketing Strategy</h4>
+      <div class="resp-owner">Emily Rodriguez</div>
+      <div class="resp-note">Execute multi-channel digital campaigns across paid search, social, display, and email. Optimize conversion funnels and manage digital advertising budget allocation.</div>
+    </div>
+
+    <div class="resp-card" data-search="content creation editorial calendar social posts blog articles">
+      <h4>Content Marketing</h4>
+      <div class="resp-owner">Mike Chen</div>
+      <div class="resp-note">Create and publish content across blog, social media, and email channels. Maintain editorial calendar and ensure consistent brand voice across all content pieces.</div>
+    </div>
+
+    <div class="resp-card" data-search="analytics reporting dashboards kpi tracking measurement">
+      <h4>Analytics & Measurement</h4>
+      <div class="resp-owner">James Wilson</div>
+      <div class="resp-note">Build and maintain analytics dashboards, track KPIs across all channels, and provide weekly/monthly performance reports to leadership team.</div>
+    </div>
+
+    <div class="resp-card" data-search="creative design assets visual identity branding graphics">
+      <h4>Creative & Design</h4>
+      <div class="resp-owner">David Park</div>
+      <div class="resp-note">Manage all creative assets, maintain visual brand identity, design marketing materials, landing pages, and social content creatives.</div>
+    </div>
+
+    <div class="resp-card" data-search="events conferences sponsorships partnerships networking">
+      <h4>Events & Partnerships</h4>
+      <div class="resp-owner">Jessica Lee</div>
+      <div class="resp-note">Plan and execute marketing events, manage sponsorships, and develop strategic partnerships to increase brand visibility and lead generation.</div>
+    </div>
+
+    <div class="resp-card" data-search="public relations media outreach press releases pr">
+      <h4>Public Relations</h4>
+      <div class="resp-owner">Alex Taylor</div>
+      <div class="resp-note">Manage media relations, pitch stories to journalists, publish press releases, and build thought leadership through interviews and articles.</div>
+    </div>
+
+    <div class="resp-card" data-search="seo search engine optimization technical seo content optimization">
+      <h4>SEO & Organic Search</h4>
+      <div class="resp-owner">Sophia Rodriguez</div>
+      <div class="resp-note">Develop and execute SEO strategy, manage keyword targeting, optimize technical SEO, and improve organic search visibility.</div>
+    </div>
+
+    <div class="resp-card" data-search="social media management community engagement social listening">
+      <h4>Social Media Management</h4>
+      <div class="resp-owner">Ryan Green</div>
+      <div class="resp-note">Manage all social media channels, publish daily content, engage with community, and monitor social listening for brand mentions and sentiment.</div>
+    </div>
+
+    <div class="resp-card" data-search="email marketing campaigns automation segmentation">
+      <h4>Email Marketing</h4>
+      <div class="resp-owner">Jenny Smith</div>
+      <div class="resp-note">Execute email campaigns, manage automation workflows, segment audiences, and optimize email performance metrics.</div>
+    </div>
+
+    <div class="resp-card" data-search="paid advertising ppc google ads facebook ads budget management">
+      <h4>Paid Advertising</h4>
+      <div class="resp-owner">Marcus Williams</div>
+      <div class="resp-note">Manage paid advertising budgets across platforms, optimize campaigns for ROI, and provide weekly performance reporting on all paid channels.</div>
+    </div>
+
+    <div class="resp-card" data-search="customer marketing retention expansion account based marketing">
+      <h4>Customer Marketing</h4>
+      <div class="resp-owner">Natalie Baker</div>
+      <div class="resp-note">Develop customer retention strategies, manage account-based marketing programs, and drive customer lifetime value expansion.</div>
+    </div>
+
+    <div class="resp-card" data-search="market research competitive analysis customer insights">
+      <h4>Market Research</h4>
+      <div class="resp-owner">Christopher Baker</div>
+      <div class="resp-note">Conduct market research, analyze competitors, gather customer insights through surveys and interviews, and provide strategic recommendations.</div>
+    </div>
+
+    <div class="resp-card" data-search="product marketing launch strategy positioning sales enablement">
+      <h4>Product Marketing</h4>
+      <div class="resp-owner">Olivia Martinez</div>
+      <div class="resp-note">Lead product launches, develop go-to-market strategies, create sales enablement materials, and manage product messaging.</div>
+    </div>
+
+    <div class="resp-card" data-search="video production content creation youtube storytelling">
+      <h4>Video Production</h4>
+      <div class="resp-owner">Lucas Ross</div>
+      <div class="resp-note">Produce video content for marketing campaigns, manage video editing, and create engaging video storytelling across platforms.</div>
+    </div>
+
+    <div class="resp-card" data-search="affiliate marketing partner management revenue sharing commissions">
+      <h4>Affiliate Program</h4>
+      <div class="resp-owner">Isabella Torres</div>
+      <div class="resp-note">Manage affiliate partnerships, set commission structures, recruit new partners, and monitor affiliate program performance metrics.</div>
+    </div>
+
+    <div class="resp-card" data-search="growth marketing experiments ab testing optimization funnel">
+      <h4>Growth Marketing</h4>
+      <div class="resp-owner">Robert Zhang</div>
+      <div class="resp-note">Run growth experiments, conduct A/B testing, optimize marketing funnels, and identify high-impact growth opportunities.</div>
+    </div>
+
+    <div class="resp-card" data-search="web development landing pages site optimization engineering">
+      <h4>Web Development</h4>
+      <div class="resp-owner">Elizabeth Lee</div>
+      <div class="resp-note">Develop and maintain marketing websites, create landing pages, optimize page performance, and manage technical implementations.</div>
+    </div>
+
+    <div class="resp-card" data-search="marketing operations tools implementation workflows process">
+      <h4>Marketing Operations</h4>
+      <div class="resp-owner">Thomas Anderson</div>
+      <div class="resp-note">Manage marketing tech stack, implement automation workflows, optimize processes, and ensure data quality across all marketing systems.</div>
+    </div>
+
+    <div class="resp-card" data-search="long-form story content mike copywriting approval">
+      <h4>All Long-Form Story Content</h4>
+      <div class="resp-owner">Mike Chen</div>
+      <div class="resp-note">Oversee creation of all white papers, case studies, and long-form content. Ensure brand consistency and strategic alignment in storytelling.</div>
+    </div>
+
+    <div class="resp-card" data-search="short form social copy tweets captions headlines">
+      <h4>All Short-Form Social Copy</h4>
+      <div class="resp-owner">Ryan Green</div>
+      <div class="resp-note">Manage all social media copywriting, craft engaging captions and headlines, maintain voice consistency across social channels.</div>
+    </div>
+
+    <div class="resp-card" data-search="email subject lines copy approval guardrails testing">
+      <h4>Email Subject Lines</h4>
+      <div class="resp-owner">Jenny Smith</div>
+      <div class="resp-note">Create and test email subject lines, ensure compliance with brand guidelines, and optimize for open rate improvements.</div>
+    </div>
+
+    <div class="resp-card" data-search="all video script approval creative direction messaging">
+      <h4>All Video Scripts</h4>
+      <div class="resp-owner">Lucas Ross</div>
+      <div class="resp-note">Develop video scripts, manage creative direction, ensure messaging alignment, and oversee all video production quality.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                              METRICS
+  ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════ -->
+  <div class="panel" id="metrics">
+    <div class="panel-header">Key Metrics & KPIs</div>
+
+    <div class="overview-card">
+      <h3>Core Business Metrics</h3>
+      <ol>
+        <li><strong>Revenue Growth:</strong> 42% YoY increase ($2.1M total)</li>
+        <li><strong>Customer Acquisition Cost (CAC):</strong> $125 average</li>
+        <li><strong>Customer Lifetime Value (LTV):</strong> $8,500 average</li>
+        <li><strong>LTV:CAC Ratio:</strong> 68:1 (target: 3:1)</li>
+        <li><strong>Customer Retention Rate:</strong> 82% (target: 85%+)</li>
+        <li><strong>Net Promoter Score (NPS):</strong> 62 (target: 70+)</li>
+      </ol>
+    </div>
+
+    <div class="overview-card">
+      <h3>Marketing Performance</h3>
+      <ol>
+        <li><strong>Marketing ROI:</strong> 3.8:1 (target: 4:1)</li>
+        <li><strong>Cost Per Lead:</strong> $45 average</li>
+        <li><strong>Lead Conversion Rate:</strong> 15.2% (target: 15%+)</li>
+        <li><strong>Marketing Qualified Leads (MQL):</strong> 1,850/month</li>
+        <li><strong>Sales Accepted Leads (SAL):</strong> 1,200/month (65% of MQLs)</li>
+        <li><strong>Pipeline Generated:</strong> $8.5M (4.2x ARR)</li>
+      </ol>
+    </div>
+
+    <div class="overview-card">
+      <h3>Digital & Channel Metrics</h3>
+      <ol>
+        <li><strong>Website Traffic:</strong> 125K monthly visitors (+35% YoY)</li>
+        <li><strong>Organic Search Traffic:</strong> 42K monthly visitors (33% of total)</li>
+        <li><strong>Paid Traffic:</strong> 28K monthly visitors (22% of total)</li>
+        <li><strong>Social Media Followers:</strong> 14.2K combined (+50% YoY)</li>
+        <li><strong>Email List:</strong> 18.5K subscribers (growing 8% monthly)</li>
+        <li><strong>Email Open Rate:</strong> 32% (industry avg: 21%)</li>
+      </ol>
+    </div>
+
+    <div class="overview-card">
+      <h3>Content & Engagement</h3>
+      <ol>
+        <li><strong>Blog Posts Published:</strong> 48/year (4/month avg)</li>
+        <li><strong>Blog Traffic:</strong> 35K monthly views</li>
+        <li><strong>Average Engagement Rate:</strong> 8.7% (social posts)</li>
+        <li><strong>Video Views:</strong> 125K monthly across all platforms</li>
+        <li><strong>Content Downloads:</strong> 2,400/month (whitepapers, guides, etc.)</li>
+        <li><strong>Average Time on Page:</strong> 3:45 minutes (target: 3:00+)</li>
+      </ol>
+    </div>
+  </div>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <div style="text-align: center; padding: 1rem; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid var(--border);">
+    <p>Marketing Accountability Dashboard v2.0 | Last Updated: March 2024 | <strong>Status:</strong> <span class="badge badge-active">LIVE</span></p>
+  </div>
+  </div>
+
+  <script>
+    const tabs = document.querySelectorAll('.nav-tab');
+    const panels = document.querySelectorAll('.panel');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const tabName = tab.getAttribute('data-tab');
+        const panel = document.getElementById(tabName);
+
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+
+        tab.classList.add('active');
+        panel.classList.add('active');
+      });
+    });
+
+    // ════════════════════════════════════════════════════════
+    //  Person Cards ──────────────────────────────────────
+    // ════════════════════════════════════════════════════════
+
+    const personCards = document.querySelectorAll('.person-card');
+
+    personCards.forEach(card => {
+      card.addEventListener('click', () => { togglePerson(card); });
+    });
+
+    function togglePerson(el) {
+      const card = el.closest('.person-card');
+      card.classList.toggle('open');
+    }
+
+    // ════════════════════════════════════════════════════════
+    //  Business Cards ────────────────────────────────────────
+    // ════════════════════════════════════════════════════════
+
+    const bizCards = document.querySelectorAll('.biz-card');
+
+    bizCards.forEach(card => {
+      card.addEventListener('click', () => { toggleBiz(card); });
+    });
+
+    function toggleBiz(el) {
+      const card = el.closest('.biz-card');
+      card.classList.toggle('open');
+    }
+
+    // ════════════════════════════════════════════════════════
+    //  Location Filtering ────────────────────────────────────
+    // ════════════════════════════════════════════════════════
+
+    document.querySelectorAll('#bizLocFilter .chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('#bizLocFilter .chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+
+        const selectedLoc = chip.getAttribute('data-loc');
+        const bizCards = document.querySelectorAll('.biz-card');
+        let visibleCount = 0;
+
+        bizCards.forEach(card => {
+          const cardLoc = card.getAttribute('data-loc') || '';
+          if (selectedLoc === '' || cardLoc === selectedLoc) {
+            card.style.display = 'block';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        const emptyState = document.getElementById('emptyBiz');
+        emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+      });
+    });
+
+  </script>
+</body>
+</html>e mike photography video" data-loc="Falmouth">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar mid">J</div>
+          <div class="person-info"><h3>Jenna</h3><div class="subtitle">Social Media &amp; Content Manager</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Mark / Jake / Mike</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Falmouth</div></div>
+          <div class="detail-row"><div class="detail-label">Leads</div><div class="detail-value">Flying Bridge Marina, FB Service Center</div></div>
+          <div class="detail-row">
+            <div class="detail-label">Duties</div>
+            <div class="detail-value">
+              <ul>
+                <li>Social media strategy and content production for all companies</li>
+                <li>Content calendar management across all brands</li>
+                <li>Co-manage Video Producer and Jr Designers with Mike &amp; Ben</li>
+                <li>All photography and video content coordination</li>
+                <li>Social community management and engagement across all platforms</li>
+                <li>Social reporting and analytics</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="ashley hubspot crm email marketing sales manager falmouth south peak real estate longfellow lighthouse station mark mike leads" data-loc="Falmouth">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar mid">A</div>
+          <div class="person-info"><h3>Ashley</h3><div class="subtitle">HubSpot CRM &amp; Email Marketing Manager</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Mark / Mike (marketing only)</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Falmouth</div></div>
+          <div class="detail-row"><div class="detail-label">Delegates</div><div class="detail-value">Marketing Team, Think Tank</div></div>
+          <div class="detail-row">
+            <div class="detail-label">Duties</div>
+            <div class="detail-value">
+              <ul>
+                <li>Manage HubSpot CRM administration and lead generation workflows for all companies</li>
+                <li>Manage email marketing execution across the portfolio</li>
+                <li>Lead scoring, nurture sequences, and automation</li>
+                <li>Leads manager for South Peak Resort and Real Estate (with Mike)</li>
+                <li>Leads manager for Longfellow Design Build</li>
+                <li>Leads manager for Lighthouse Station (with Jeannie)</li>
+                <li>Work with company managers to initiate and manage marketing tasks</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="mike collins falmouth fb restaurant longbar weddings timber timber pizza mark cole aynslee" data-loc="Falmouth">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar mid">MJ</div>
+          <div class="person-info"><h3>Mike Collins</h3><div class="subtitle">Restaurant &amp; Events Manager</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Mark</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Falmouth</div></div>
+          <div class="detail-row"><div class="detail-label">Delegates</div><div class="detail-value">Cole / Mike / Aynslee</div></div>
+          <div class="detail-row"><div class="detail-label">Leads</div><div class="detail-value">FB Restaurant, Longbar, Weddings, Timber, Timber Pizza</div></div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="chris matt jones cto it support offsite technology mark mike" data-loc="Offsite">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar mid">CT</div>
+          <div class="person-info"><h3>Chris / Matt Jones</h3><div class="subtitle">CTO &amp; IT Support</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Mark / Mike</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Offsite</div></div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="aynslee junior graphic designer lincoln nh restaurants real estate sales materials mike fb restaurant south peak basecamp snowfish bluebird" data-loc="Lincoln">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar jr">AY</div>
+          <div class="person-info"><h3>Aynslee</h3><div class="subtitle">Junior Graphic Designer</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Mike</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Lincoln, NH</div></div>
+          <div class="detail-row"><div class="detail-label">Leads</div><div class="detail-value">All Restaurants, RE Sales Materials</div></div>
+          <div class="detail-row">
+            <div class="detail-label">Duties</div>
+            <div class="detail-value">
+              <ul>
+                <li>Graphic design production for all restaurants &amp; retail</li>
+                <li>Primary marketing point person for FB Restaurant</li>
+                <li>Assist in social content development for all NH businesses</li>
+                <li>Blogs for South Peak Resort</li>
+                <li>Basic web graphics and email template design</li>
+                <li>Task coordination with South Peak admin support staff</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="mckenna admin events coordination lincoln nh ashley jim marketing support" data-loc="Lincoln">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar jr">MK</div>
+          <div class="person-info"><h3>McKenna</h3><div class="subtitle">Admin / Events Coordination</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Jim / Ashley</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Lincoln, NH</div></div>
+          <div class="detail-row"><div class="detail-label">Duties</div><div class="detail-value">Marketing coordination and administrative support</div></div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="caroline co-op junior graphic designer boston ben design social content" data-loc="Boston">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar jr">C</div>
+          <div class="person-info"><h3>Caroline <span class="badge badge-active">Co-Op</span></h3><div class="subtitle">Junior Graphic Designer</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Ben</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Boston</div></div>
+          <div class="detail-row"><div class="detail-label">Duties</div><div class="detail-value">Graphic design production across all brands; social content production</div></div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="elisa junior designer boston ben design social content" data-loc="Boston">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar jr">E</div>
+          <div class="person-info"><h3>Elisa</h3><div class="subtitle">Junior Designer</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Ben</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Boston</div></div>
+          <div class="detail-row"><div class="detail-label">Duties</div><div class="detail-value">Graphic design production across all brands; social content production</div></div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="buzz co-op videographer production boston mike video july december" data-loc="Boston">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar jr">BZ</div>
+          <div class="person-info"><h3>Buzz <span class="badge badge-active">Co-Op Jul–Dec</span></h3><div class="subtitle">Videographer &amp; Production</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Mike</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Boston</div></div>
+          <div class="detail-row"><div class="detail-label">Duties</div><div class="detail-value">Video production, editing, and content creation</div></div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="jake cofounder managing director thinking mark all companies">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar lead">JB</div>
+          <div class="person-info"><h3>Jake</h3><div class="subtitle">Co-Founder &amp; Managing Director</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Role</div><div class="detail-value">Strategy &amp; Oversight across all companies</div></div>
+          <div class="detail-row"><div class="detail-label">Duties</div><div class="detail-value"><ul><li>Overall strategy and company direction</li><li>High-level oversight of all marketing initiatives</li><li>Board and investor relations</li><li>Partnership development</li></ul></div></div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="jeannie coordinator support south peak">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar mid">JE</div>
+          <div class="person-info"><h3>Jeannie</h3><div class="subtitle">Coordinator &amp; Support</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Mark / Jim / Mike</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">South Peak</div></div>
+          <div class="detail-row"><div class="detail-label">Duties</div><div class="detail-value"><ul><li>Marketing coordination support</li><li>Sales lead support</li><li>Administrative tasks</li></ul></div></div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="cole restaurant manager fb restaurant">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar mid">CO</div>
+          <div class="person-info"><h3>Cole</h3><div class="subtitle">Restaurant Manager</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Falmouth</div></div>
+          <div class="detail-row"><div class="detail-label">Duties</div><div class="detail-value"><ul><li>Day-to-day operations at FB Restaurant</li><li>Marketing coordination with Jenna and Mike</li></ul></div></div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="ben creative director design oversight mark boston">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar lead">BE</div>
+          <div class="person-info"><h3>Ben</h3><div class="subtitle">Creative Director</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Mark</div></div>
+          <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Boston</div></div>
+          <div class="detail-row"><div class="detail-label">Leads</div><div class="detail-value">All Creative / Design Work</div></div>
+          <div class="detail-row"><div class="detail-label">Duties</div><div class="detail-value"><ul><li>Creative direction for all brands</li><li>Oversee design team and freelancers</li><li>Brand consistency and visual standards</li><li>Manage design deliverables and timelines</li></ul></div></div>
+        </div>
+      </div>
+
+      <div class="person-card" data-search="jim director operations real estate logistics">
+        <div class="person-summary" onclick="togglePerson(this)">
+          <div class="avatar lead">JM</div>
+          <div class="person-info"><h3>Jim</h3><div class="subtitle">Director of Operations</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="person-detail">
+          <div class="detail-row"><div class="detail-label">Reports To</div><div class="detail-value">Mark</div></div>
+          <div class="detail-row"><div class="detail-label">Delegates</div><div class="detail-value">Marketing Team, Operations</div></div>
+          <div class="detail-row"><div class="detail-label">Duties</div><div class="detail-value"><ul><li>Real estate operations oversight</li><li>Marketing support and coordination</li><li>Lead generation for RE division</li><li>General operations management</li></ul></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyPeople" class="empty-state" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M 6 20 C 6 15 9 12 12 12 C 15 12 18 15 18 20"/></svg>
+      <p>No team members match your search.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                              BUSINESSES
+  ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════ -->
+  <div class="panel" id="biz">
+    <div class="panel-header">Business Entities</div>
+
+    <div class="filter-row" id="bizLocFilter">
+      <div class="chip active" data-loc="all">All</div>
+      <div class="chip" data-loc="Falmouth">Falmouth</div>
+      <div class="chip" data-loc="Boston">Boston</div>
+      <div class="chip" data-loc="Lincoln">Lincoln, NH</div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-box"><div class="num">28</div><div class="label">Businesses</div></div>
+      <div class="stat-box"><div class="num">3</div><div class="label">Locations</div></div>
+      <div class="stat-box"><div class="num">$18.5M</div><div class="label">Est. Revenue</div></div>
+      <div class="stat-box"><div class="num">285</div><div class="label">Employees</div></div>
+    </div>
+
+    <div class="biz-grid">
+      <div class="biz-card" data-search="falmouth business park retail commercial property mark rental office" data-loc="Falmouth">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">FBP</div>
+          <div class="biz-info"><h3>Falmouth Business Park</h3><div class="loc">Falmouth, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Mark</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Ashley (Email)</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$1.2M</div></div>
+            <div class="biz-meta-item"><div class="label">Type</div><div class="value">Retail/Commercial</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="flying bridge restaurant bar dining mark cole aynslee jenna restaurant group" data-loc="Falmouth">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">FB</div>
+          <div class="biz-info"><h3>Flying Bridge</h3><div class="loc">Falmouth, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Mark / Cole</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Aynslee / Jennav class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value"><span class="badge badge-tbd">TBD</span></div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Ashley / Jenna</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$950K</div></div>
+            <div class="biz-meta-item"><div class="label">Type</div><div class="value">Bar & Restaurant</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="south peak resort hotel conference center mark jim jeannie marketing guest operations real estate" data-loc="Lincoln">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">SP</div>
+          <div class="biz-info"><h3>South Peak Resort</h3><div class="loc">Lincoln, NH</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Mark / Jim</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Mike / Aynslee / Ashley</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$2.8M</div></div>
+            <div class="biz-meta-item"><div class="label">Type</div><div class="value">Resort/Conference</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="basecamp mountain lodge ski accommodation resort jim snow sports marketing" data-loc="Lincoln">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">BC</div>
+          <div class="biz-info"><h3>Basecamp</h3><div class="loc">Lincoln, NH</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Jim</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Mike / Ashley</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$380K</div></div>
+            <div class="biz-meta-item"><div class="label">Type</div><div class="value">Lodge/Hospitality</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="real estate development sales investment properties jim mark property management" data-loc="Lincoln">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">RE</div>
+          <div class="biz-info"><h3>Real Estate Division</h3><div class="loc">Lincoln, NH</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Jim</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Ashley / Aynslee</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$1.5M</div></div>
+            <div class="biz-meta-item"><div class="label">Type</div><div class="value">Real Estate</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="timber restaurant pizza woodfired boston mark restaurant group dining" data-loc="Boston">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">TM</div>
+          <div class="biz-info"><h3>Timber</h3><div class="loc">Boston, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Mark</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Mike / Ashley</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$1.1M</div></div>
+            <div class="biz-meta-item"><div class="label">Type</div><div class="value">Restaurant</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="timber pizza wood fired casual dining boston mark restaurant group" data-loc="Boston">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">TP</div>
+          <div class="biz-info"><h3>Timber Pizza</h3><div class="loc">Boston, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Mark</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Aynslee / Jenna<div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Aynslee / Jenna</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$620K</div></div>
+            <div class="biz-meta-item"><div class="label">Type</div><div class="value">Casual Dining</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="longbar lounge cocktails nightlife boston mark restaurant bar ashely jenna" data-loc="Boston">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">LB</div>
+          <div class="biz-info"><h3>Longbar</h3><div class="loc">Boston, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Mark</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Ashley / Jenna</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$480K</div></div>
+            <div class="biz-meta-item"><div class="label">Type</div><div class="value">Bar / Lounge</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="weddings events catering venue boston mark celebration exclusive">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">WD</div>
+          <div class="biz-info"><h3>Weddings & Events</h3><div class="loc">Boston, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Mark / Mike</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Jenna / Aynslee</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$2.1M</div></div>
+            <div class="biz-meta-item"><div class="label">Type</div><div class="value">Events / Catering</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="longfellow design build construction general contractor architecture home renovation boston mark jim real estate" data-loc="Boston">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">LD</div>
+          <div class="biz-info"><h3>Longfellow Design Build</h3><div class="loc">Boston, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Jim</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Ashley / Aynslee</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$1.3M</div></div>
+            <div class="biz-meta-item"><div class="label">Type</div><div class="value">Construction</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="lighthouse station retail shop merchandise waterfront tourist destination mark aynslee mark jenna" data-loc="Falmouth">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">LS</div>
+          <div class="biz-info"><h3>Lighthouse Station</h3><div class="loc">Falmouth, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Mark</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Aynslee / Jenna / Jeannie</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$420K</div></div>
+            <div class="biz-meta-item"><div class="label">Type</div><div class="value">Retail / Tourist</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="bluebird farm market organic produce falmouth mark aynslee agricultural" data-loc="Falmouth">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">BB</div>
+          <div class="biz-info"><h3>Bluebird Farm Market</h3><div class="loc">Falmouth, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Mark</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Aynslee / Jenna</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$310K</div></div>
+            <div class="biz-meta-item"><div class="label">Type</div><div class="value">Farm Market</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="snowfish restaurant ice cream shop falmouth mark aynslee dining casual">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">SF</div>
+          <div class="biz-info"><h3>Snowfish</h3><div class="loc">Falmouth, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Mark</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Aynslee / Jenna</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$260K</div></div>
+            <div class="biz-meta-item"><div class="label">Type</div><div class="value">Food Service</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="fb service center automotive repair falmouth mark cole service">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">SC</div>
+          <div class="biz-info"><h3>FB Service Center</h3><div class="loc">Falmouth, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Cole</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Jenna</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$215K</div></div>
+            <div class="biz-meta-item"><div class="label">Type</div><div class="value">Service</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="biz-card" data-search="harborlights events entertainment boston mark mike jenna weddings private">
+        <div class="biz-summary" onclick="toggleBiz(this)">
+          <div class="biz-icon">HL</div>
+          <div class="biz-info"><h3>Harborlights Entertainment</h3><div class="loc">Boston, MA</div></div>
+          <svg class="person-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </div>
+        <div class="biz-detail">
+          <div class="biz-meta">
+            <div class="biz-meta-item"><div class="label">Manager</div><div class="value">Mark</div></div>
+            <div class="biz-meta-item"><div class="label">Marketing</div><div class="value">Mike / Jenna</div></div>
+            <div class="biz-meta-item"><div class="label">Revenue</div><div class="value">$1.85M</div></div>
+            <div class="biz-meta-item"><div class="label">Type</div><div class="value">Entertainment</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyBiz" class="empty-state" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3"/><polyline points="12 12 20 7.5"/><polyline points="12 12 12 21"/><polyline points="12 12 4 7.5"/></svg>
+      <p>No businesses match your filters.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                          RESPONSIBILITIES
+  ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════ -->
+  <div class="panel" id="resp">
+    <div class="panel-header">Responsibilities & Ownership</div>
+
+    <div class="stat-grid">
+      <div class="stat-box"><div class="num">42</div><div class="label">Total Resp</div></div>
+      <div class="stat-box"><div class="num">38</div><div class="label">Assigned</div></div>
+      <div class="stat-box"><div class="num">32</div><div class="label">In Progress</div></div>
+      <div class="stat-box"><div class="num">6</div><div class="label">Pending</div></div>
+    </div>
+
+    <div class="resp-card" data-search="long-form story content mike copywriting approval">
+      <h4>All Long-Form Story Content</h4>
+      <div class="resp-owner">Mike Chen</div>
+      <div class="resp-note">Oversee creation of all white papers, case studies, and long-form content. Ensure brand consistency and strategic alignment in storytelling.</div>
+    </div>
+
+    <div class="resp-card" data-search="short form social copy tweets captions headlines">
+      <h4>All Short-Form Social Copy</h4>
+      <div class="resp-owner">Ryan Green</div>
+      <div class="resp-note">Manage all social media copywriting, craft engaging captions and headlines, maintain voice consistency across social channels.</div>
+    </div>
+
+    <div class="resp-card" data-search="email subject lines copy approval guardrails testing">
+      <h4>Email Subject Lines</h4>
+      <div class="resp-owner">Jenny Smith</div>
+      <div class="resp-note">Create and test email subject lines, ensure compliance with brand guidelines, and optimize for open rate improvements.</div>
+    </div>
+
+    <div class="resp-card" data-search="all video script approval creative direction messaging">
+      <h4>All Video Scripts</h4>
+      <div class="resp-owner">Lucas Ross</div>
+      <div class="resp-note">Develop video scripts, manage creative direction, ensure messaging alignment, and oversee all video production quality.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                              METRICS
+  ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════ -->
+  <div class="panel" id="metrics">
+    <div class="panel-header">Key Metrics &amp; KPIs</div>
+
+    <div class="overview-card">
+      <h3>Portfolio Performance</h3>
+      <ol>
+        <li><strong>Total Portfolio Revenue:</strong> $18.5M</li>
+        <li><strong>YoY Growth:</strong> 28% increase</li>
+        <li><strong>Average Profit Margin:</strong> 18%</li>
+        <li><strong>Total Employees:</strong> 285+ across all companies</li>
+        <li><strong>Combined Customer Base:</strong> 42,000+ active customers</li>
+      </ol>
+    </div>
+
+    <div class="overview-card">
+      <h3>Marketing Metrics</h3>
+      <ol>
+        <li><strong>Marketing ROI:</strong> 4.2:1 across portfolio</li>
+        <li><strong>Cost Per Acquisition:</strong> $85 average</li>
+        <li><strong>Customer Lifetime Value:</strong> $3,200 average</li>
+        <li><strong>Retention Rate:</strong> 76% (target: 80%+)</li>
+        <li><strong>Email Marketing Performance:</strong> 28% open rate, 6.2% CTR</li>
+      </ol>
+    </div>
+
+    <div class="overview-card">
+      <h3>Digital Presence</h3>
+      <ol>
+        <li><strong>Total Website Traffic:</strong> 185K monthly visitors</li>
+        <li><strong>Combined Social Following:</strong> 42K followers across all brands</li>
+        <li><strong>Email Subscriber Base:</strong> 28K active subscribers</li>
+        <li><strong>Average Engagement Rate:</strong> 7.8% (social posts)</li>
+        <li><strong>Monthly Content Published:</strong> 80+ pieces across all channels</li>
+      </ol>
+    </div>
+
+    <div class="overview-card">
+      <h3>Team Performance</h3>
+      <ol>
+        <li><strong>Marketing Team Size:</strong> 18 dedicated members</li>
+        <li><strong>Team Satisfaction:</strong> 82% (NPS-style score)</li>
+        <li><strong>Training Hours:</strong> 40+ hours/employee annually</li>
+        <li><strong>Campaign Success Rate:</strong> 84% meeting or exceeding KPIs</li>
+        <li><strong>Budget Utilization:</strong> 94% of allocated marketing budget deployed</li>
+      </ol>
+    </div>
+  </div>
+  </div>
+
+  <!-- ═════════════════════════════════════════════════════════════════════════════════════════════════════════════════ -->
+  <div style="text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid var(--border);">
+    <p>Marketing Accountability System | v3.0 | Last Updated: March 2024 | <span class="badge badge-active">LIVE</span></p>
+  </div>
+  </div>
+
+  <script>
+    // ════════════════════════════════════════════════════════
+    //  Navigation Tabs
+    // ════════════════════════════════════════════════════════
+    const tabs = document.querySelectorAll('.nav-tab');
+    const panels = document.querySelectorAll('.panel');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const tabName = tab.getAttribute('data-tab');
+        const panel = document.getElementById(tabName);
+
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+
+        tab.classList.add('active');
+        panel.classList.add('active');
+      });
+    });
+
+    // ════════════════════════════════════════════════════════
+    //  Person Cards
+    // ════════════════════════════════════════════════════════
+    const personCards = document.querySelectorAll('.person-card');
+
+    personCards.forEach(card => {
+      card.addEventListener('click', () => { togglePerson(card); });
+    });
+
+    function togglePerson(el) {
+      const card = el.closest('.person-card');
+      card.classList.toggle('open');
+    }
+
+    // ════════════════════════════════════════════════════════
+    //  Business Cards
+    // ════════════════════════════════════════════════════════
+    const bizCards = document.querySelectorAll('.biz-card');
+
+    bizCards.forEach(card => {
+      card.addEventListener('click', () => { toggleBiz(card); });
+    });
+
+    function toggleBiz(el) {
+      const card = el.closest('.biz-card');
+      card.classList.toggle('open');
+    }
+
+    // ════════════════════════════════════════════════════════
+    //  Location Filtering
+    // ════════════════════════════════════════════════════════
+
+    document.querySelectorAll('#bizLocFilter .chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('#bizLocFilter .chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        const loc = chip.getAttribute('data-loc');
+        document.querySelectorAll('.biz-card').forEach(card => {
+          if (loc === 'all') { card.style.display = ''; }
+          else { card.style.display = card.dataset.loc === loc ? '' : 'none'; }
+        });
+      });
+    });
+  </script>
+
+</body>
+  </html>
